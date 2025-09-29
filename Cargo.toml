@@ -1,0 +1,47 @@
+[package]
+name = "rust-todo-app"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# Async runtime - Required for async/await functionality
+tokio = { version = "1.35", features = ["full"] }
+
+# Web framework - For building REST API
+axum = { version = "0.7", features = ["macros"] }
+
+# Database - Async PostgreSQL with compile-time checking
+sqlx = { version = "0.7", features = ["runtime-tokio-native-tls", "postgres", "migrate", "chrono"] }
+
+# Serialization - For JSON handling
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Environment variables - For database connection strings
+dotenv = "0.15"
+
+# Date and time handling
+chrono = { version = "0.4", features = ["serde"] }
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+# Tower middleware (used by Axum)
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors", "trace"] }
+
+# Tauri dependencies
+tauri = { version = "1.5", features = ["shell-open"] }
+
+[build-dependencies]
+tauri-build = { version = "1.5", features = [] }
+
+# This section is for development dependencies only
+[dev-dependencies]
