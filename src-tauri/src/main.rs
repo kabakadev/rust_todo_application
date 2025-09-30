@@ -2,5 +2,6 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-  app_lib::run();
+  // the lib crate is named after the package: rust-todo-app -> rust_todo_app
+  rust_todo_app::run();
 }

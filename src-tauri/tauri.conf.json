@@ -2,16 +2,21 @@
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Rust TODO App",
   "version": "0.1.0",
-  "identifier": "com.tauri.dev",
+  "identifier": "com.rustodo.app",
   "build": {
+    "beforeDevCommand": "",
+    "beforeBuildCommand": "",
     "frontendDist": "../frontend"
   },
   "app": {
+    "withGlobalTauri": true,
     "windows": [
       {
         "title": "TODO Manager",
-        "width": 800,
-        "height": 600,
+        "width": 900,
+        "height": 700,
+        "minWidth": 600,
+        "minHeight": 500,
         "resizable": true,
         "fullscreen": false
       }

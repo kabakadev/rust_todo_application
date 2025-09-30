@@ -1,24 +1,33 @@
 [package]
 name = "rust-todo-app"
 version = "0.1.0"
-description = "A Tauri-based TODO application with Rust backend"
+edition = "2021"
+description = "A Tauri v2-based TODO application with Rust backend"
 authors = ["Ian Kabaka"]
 license = ""
 repository = ""
-edition = "2021"
 
 [build-dependencies]
-tauri-build = { version = "1.5", features = [] }
+tauri-build = { version = "2", features = [] }
 
 [dependencies]
-tauri = { version = "1.5", features = ["shell-open"] }
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
-tokio = { version = "1.35", features = ["full"] }
-sqlx = { version = "0.7", features = ["runtime-tokio-native-tls", "postgres", "chrono"] }
+# Shared core crate (Option A)
+rust_todo_core = { package = "rust-todo-core", path = ".." }
+
+# Tauri v2
+tauri = { version = "2", features = [] }
+tauri-plugin-shell = "2"
+tauri-plugin-log = "2"
+log = "0.4"
+
+# App deps
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["full"] }
+sqlx = { version = "0.7", features = ["runtime-tokio-native-tls", "postgres", "migrate", "chrono"] }
 chrono = { version = "0.4", features = ["serde"] }
-dotenv = "0.15"
-anyhow = "1.0"
+dotenvy = "0.15"
+anyhow = "1"
 
 [features]
-custom-protocol = ["tauri/custom-protocol"]
+default = []

@@ -1,0 +1,2 @@
+[alias]
+test-it = "test -p rust-todo-app -- --nocapture"

@@ -1,28 +1,42 @@
 [package]
-name = "rust-todo-app"
+name = "rust-todo-core"
 version = "0.1.0"
 edition = "2021"
+description = "Core domain + data layer for the Rust TODO app (shared with Tauri shell)."
+license = "MIT"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+# The workspace root; includes the Tauri shell crate.
+[workspace]
+members = ["src-tauri"]
+
+# ---- Library target (shared with src-tauri) ----
+[lib]
+name = "rust_todo_core"      # crate name used by dependents
+path = "src/lib.rs"
+
+# ---- Binary target (optional CLI/server) ----
+[[bin]]
+name = "rust-todo-core"      # `cargo run --bin rust-todo-core`
+path = "src/main.rs"
 
 [dependencies]
-# Async runtime - Required for async/await functionality
+# Async runtime
 tokio = { version = "1.35", features = ["full"] }
 
-# Web framework - For building REST API
+# Web framework (optional—only if you’re exposing an HTTP API)
 axum = { version = "0.7", features = ["macros"] }
 
-# Database - Async PostgreSQL with compile-time checking
+# Database (PostgreSQL + migrations)
 sqlx = { version = "0.7", features = ["runtime-tokio-native-tls", "postgres", "migrate", "chrono"] }
 
-# Serialization - For JSON handling
+# Serialization
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 
-# Environment variables - For database connection strings
-dotenv = "0.15"
+# Env loading (use in dev; on prod rely on real env vars)
+dotenvy = "0.15"
 
-# Date and time handling
+# Time
 chrono = { version = "0.4", features = ["serde"] }
 
 # Error handling
@@ -33,15 +47,8 @@ thiserror = "1.0"
 tracing = "0.1"
 tracing-subscriber = "0.3"
 
-# Tower middleware (used by Axum)
+# Middleware (if you use Axum)
 tower = "0.4"
 tower-http = { version = "0.5", features = ["cors", "trace"] }
 
-# Tauri dependencies
-tauri = { version = "1.5", features = ["shell-open"] }
-
-[build-dependencies]
-tauri-build = { version = "1.5", features = [] }
-
-# This section is for development dependencies only
 [dev-dependencies]

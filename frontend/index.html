@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+    default-src 'self' asset: tauri:;
+    img-src 'self' asset: data:;
+    style-src 'self' 'unsafe-inline' asset:;
+    script-src 'self' 'unsafe-inline' tauri: asset:;
+    connect-src 'self' tauri: ipc:;
+  "
+    />
+
+    <title>Rust TODO Manager</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="app-header">
+        <h1>📝 Rust TODO Manager</h1>
+        <p class="subtitle">Built with Rust, Tauri & PostgreSQL</p>
+      </header>
+
+      <!-- Add Todo Form -->
+      <section class="add-todo-section">
+        <h2>Add New Task</h2>
+        <form id="add-todo-form">
+          <div class="form-group">
+            <input
+              type="text"
+              id="todo-title"
+              placeholder="Task title..."
+              required
+              maxlength="255"
+            />
+          </div>
+
+          <div class="form-group">
+            <textarea
+              id="todo-description"
+              placeholder="Description (optional)..."
+              rows="3"
+            ></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="todo-priority">Priority:</label>
+              <select id="todo-priority">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+                <option value="urgent">Urgent</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">➕ Add Task</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Filter Section -->
+      <section class="filter-section">
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="all">All Tasks</button>
+          <button class="filter-btn" data-filter="active">Active</button>
+          <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+
+        <div class="sort-options">
+          <label>Sort by:</label>
+          <select id="sort-select">
+            <option value="created">Date Created</option>
+            <option value="priority">Priority</option>
+            <option value="title">Title</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Todo List -->
+      <section class="todos-section">
+        <div id="loading" class="loading">Loading tasks...</div>
+        <div id="error" class="error" style="display: none"></div>
+        <div id="empty-state" class="empty-state" style="display: none">
+          <p>🎉 No tasks yet! Add one above to get started.</p>
+        </div>
+        <ul id="todo-list" class="todo-list"></ul>
+      </section>
+
+      <!-- Statistics -->
+      <footer class="stats-footer">
+        <div class="stat-item">
+          <span class="stat-label">Total:</span>
+          <span id="total-count" class="stat-value">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Active:</span>
+          <span id="active-count" class="stat-value">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Completed:</span>
+          <span id="completed-count" class="stat-value">0</span>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Edit Modal (hidden by default) -->
+    <div id="edit-modal" class="modal" style="display: none">
+      <div class="modal-content">
+        <h2>Edit Task</h2>
+        <form id="edit-todo-form">
+          <input type="hidden" id="edit-todo-id" />
+
+          <div class="form-group">
+            <input
+              type="text"
+              id="edit-todo-title"
+              placeholder="Task title..."
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <textarea
+              id="edit-todo-description"
+              placeholder="Description..."
+              rows="3"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-todo-priority">Priority:</label>
+            <select id="edit-todo-priority">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+              <option value="urgent">Urgent</option>
+            </select>
+          </div>
+
+          <div class="modal-buttons">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onclick="closeEditModal()"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Tauri API Script -->
+    <script defer src="./app.js"></script>
+  </body>
+</html>
