@@ -285,16 +285,7 @@ Applied 20250929154718/init todos
 Applied 20250929173325/cleanup legacy updated at trigger
 ```
 
-### Step 5: Verify Setup
-
-```bash
-# Test database connection
-psql postgresql://postgres:password@localhost/rust_todo_db -c "SELECT 1;"
-
-# Should output: 1
-```
-
-### Step 6: Run the Application
+### Step 5: Run the Application
 
 **Development Mode (with hot reload):**
 
