@@ -120,8 +120,8 @@ sudo service postgresql status
 
 **4. Tauri System Dependencies**
 
-```bash
-# Essential build tools
+````bash
+# Install all required development libraries
 sudo apt install -y \
     libwebkit2gtk-4.1-dev \
     build-essential \
@@ -132,7 +132,9 @@ sudo apt install -y \
     libssl-dev \
     libayatana-appindicator3-dev \
     librsvg2-dev
-```
+
+# For Ubuntu 24.04 specifically
+# Note: Use libwebkit2gtk-4.1-dev, NOT 4.0-dev (deprecated)
 
 **5. Tauri CLI**
 
@@ -142,7 +144,7 @@ cargo install tauri-cli --version "^2.0.0"
 
 # Verify installation
 cargo tauri --version
-```
+````
 
 #### For Windows Users
 
