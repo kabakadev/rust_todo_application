@@ -93,19 +93,7 @@ rustc --version  # Should show 1.70+
 cargo --version
 ```
 
-**2. Node.js & npm**
-
-```bash
-# Ubuntu/Debian
-sudo apt update
-sudo apt install -y nodejs npm
-
-# Verify installation
-node --version  # Should be 16+
-npm --version
-```
-
-**3. PostgreSQL Database**
+**2. PostgreSQL Database**
 
 ```bash
 # Install PostgreSQL
@@ -118,7 +106,7 @@ sudo service postgresql start
 sudo service postgresql status
 ```
 
-**4. Tauri System Dependencies**
+**3. Tauri System Dependencies**
 
 ````bash
 # Install all required development libraries
@@ -168,48 +156,122 @@ cd rust-todo-app
 
 ### Step 2: Database Setup
 
-```bash
-# Switch to postgres user
-sudo -u postgres psql
+# Database & Environment Setup
 
-# In PostgreSQL prompt, run these commands:
+This app uses **PostgreSQL** with **SQLx**. Follow these steps to get a working local setup.
+
+---
+
+## 1) Create a Dedicated DB User and Database (Recommended)
+
+Open a Postgres shell:
+
+```bash
+# Linux/macOS/WSL
+sudo -u postgres psql
 ```
 
+Then run these SQL commands:
+
 ```sql
--- Create database
-CREATE DATABASE rust_todo_db;
+-- 1) Create a least-privileged app user
+CREATE ROLE rust_todo WITH LOGIN PASSWORD 'password';
 
--- Create user with password
-CREATE USER postgres WITH PASSWORD 'password';
+-- 2) Create the app database owned by that user
+CREATE DATABASE rust_todo_db OWNER rust_todo;
 
--- Grant privileges
-GRANT ALL PRIVILEGES ON DATABASE rust_todo_db TO postgres;
+-- 3) (Optional) Ensure privileges are explicit
+GRANT ALL PRIVILEGES ON DATABASE rust_todo_db TO rust_todo;
 
--- Exit PostgreSQL
+-- exit psql
 \q
 ```
 
-### Step 3: Environment Configuration
+> **Why this way?** It mirrors production and avoids using the superuser `postgres` for app connections.
 
-Create a `.env` file in the **project root** (not in src-tauri):
+---
+
+## 2) Environment Variables
+
+SQLx reads your connection string in two places:
+
+- `DATABASE_URL` — used at **runtime**.
+- `SQLX_DATABASE_URL` — used by **SQLx macros/CLI** at **compile time** (usually set to the same value).
+
+### `.env.example` → `.env`
+
+Copy the template and fill in values:
 
 ```bash
-# In project root directory
-cat > .env << 'EOF'
-DATABASE_URL=postgresql://postgres:password@localhost/rust_todo_db
-EOF
+cp .env.example .env
 ```
 
-**Security Note**: The `.env` file is already in `.gitignore` and will not be committed to version control.
+**Recommended contents for `.env` (project root):**
 
-### Step 4: Run Database Migrations
+```dotenv
+# Postgres (use the TCP URL that works on your machine)
+DATABASE_URL=postgres://rust_todo:password@localhost:5432/rust_todo_db
+
+# Let sqlx-cli and compile-time macros pick it up automatically
+SQLX_DATABASE_URL=${DATABASE_URL}
+
+# Optional: Rust logging level
+RUST_LOG=debug
+
+# If your app exposes an HTTP layer (adjust/ignore if not used)
+SERVER_HOST=127.0.0.1
+SERVER_PORT=8080
+```
+
+> **Location:** Put `.env` in the **project root** (not inside `src-tauri/`).
+> **Ignore:** `.env` is already in `.gitignore` and won’t be committed.
+
+### Keep `.env.example` in the Repo
+
+Use realistic defaults to match these docs:
+
+```dotenv
+# Database Configuration
+DATABASE_URL=postgres://rust_todo:password@localhost:5432/rust_todo_db
+
+# Ensures SQLx macros/CLI see the same URL during build-time tasks
+SQLX_DATABASE_URL=${DATABASE_URL}
+
+# Server Configuration (if used)
+SERVER_HOST=127.0.0.1
+SERVER_PORT=8080
+
+# Application Configuration
+RUST_LOG=debug
+```
+
+## 3) Verify the Connection
+
+Pick any one of the following:
+
+```bash
+# Using psql (relies on your shell env)
+psql "$DATABASE_URL" -c '\dt'             # should connect; tables may be empty
+
+# Or pass the URL directly
+psql "postgres://rust_todo:password@localhost:5432/rust_todo_db" -c '\dt'
+
+# Using sqlx-cli (install first: `cargo install sqlx-cli`)
+sqlx database verify                      # reads SQLX_DATABASE_URL / .env
+```
+
+If `psql` can connect, your URL is correct.
+
+---
+
+## 4) Run Migrations (If Present)
 
 ```bash
 # Navigate to Tauri directory
 cd src-tauri
 
 # Run migrations to create tables, enums, and triggers
-cargo sqlx migrate run --database-url postgresql://postgres:password@localhost/rust_todo_db
+cargo sqlx migrate run
 
 # Return to project root
 cd ..
@@ -239,6 +301,55 @@ psql postgresql://postgres:password@localhost/rust_todo_db -c "SELECT 1;"
 ```bash
 cargo tauri dev
 ```
+
+> SQLx compile-time checks/macros use `SQLX_DATABASE_URL`. Runtime DB access uses `DATABASE_URL`.
+
+---
+
+## Troubleshooting
+
+- **Authentication failed**
+  Check `DATABASE_URL` credentials and that the role exists. In `psql`:
+
+  ```sql
+  \du rust_todo
+  -- or reset the password
+  ALTER ROLE rust_todo WITH PASSWORD 'strongpass';
+  ```
+
+````
+
+- **Can’t connect to server**
+  Ensure Postgres is running and listening on TCP. On Ubuntu:
+
+  ```bash
+  sudo systemctl status postgresql
+  ```
+
+- **Migrations can’t create tables**
+  DB ownership matters. Recreate the DB owned by `rust_todo`:
+
+  ```sql
+  -- in psql as postgres superuser:
+  DROP DATABASE IF EXISTS rust_todo_db;
+  CREATE DATABASE rust_todo_db OWNER rust_todo;
+  ```
+
+- **Windows/PowerShell note**
+  When running `psql` with env vars:
+
+  ```powershell
+  $env:DATABASE_URL="postgres://rust_todo:password@localhost:5432/rust_todo_db"
+  psql $env:DATABASE_URL -c "\dt"
+  ```
+
+---
+
+
+
+### Step 4: Run Database Migrations
+
+
 
 **First Launch Notes:**
 
@@ -430,8 +541,8 @@ await window.__TAURI__.core.invoke("command_name", { param: value });
 async fn db_ping(pool: tauri::State<'_, PgPool>) -> Result<String, String>
 ```
 
-**Parameters**: None  
-**Returns**: `"db ok: 1"` on success  
+**Parameters**: None
+**Returns**: `"db ok: 1"` on success
 **Usage**:
 
 ```javascript
@@ -446,8 +557,8 @@ console.log(result); // "db ok: 1"
 async fn list_todos(pool: tauri::State<'_, PgPool>) -> Result<Vec<Todo>, String>
 ```
 
-**Parameters**: None  
-**Returns**: Array of `Todo` objects (newest first)  
+**Parameters**: None
+**Returns**: Array of `Todo` objects (newest first)
 **Usage**:
 
 ```javascript
@@ -462,8 +573,8 @@ const todos = await invoke("list_todos");
 async fn get_todo(pool: tauri::State<'_, PgPool>, id: i64) -> Result<Todo, String>
 ```
 
-**Parameters**: `id` (number)  
-**Returns**: Single `Todo` object  
+**Parameters**: `id` (number)
+**Returns**: Single `Todo` object
 **Usage**:
 
 ```javascript
@@ -483,7 +594,7 @@ async fn create_todo(pool: tauri::State<'_, PgPool>, payload: CreateTodo) -> Res
 - `description` (string, optional, max 1000 chars)
 - `priority` (string, one of: "low", "medium", "high", "urgent")
 
-**Returns**: Created `Todo` object  
+**Returns**: Created `Todo` object
 **Usage**:
 
 ```javascript
@@ -508,7 +619,7 @@ async fn update_todo(pool: tauri::State<'_, PgPool>, id: i64, patch: UpdateTodo)
 - `id` (number)
 - `patch` (object with any of: `title`, `description`, `priority`, `is_completed`)
 
-**Returns**: Updated `Todo` object  
+**Returns**: Updated `Todo` object
 **Usage**:
 
 ```javascript
@@ -533,7 +644,7 @@ async fn toggle_todo(pool: tauri::State<'_, PgPool>, id: i64, to_completed: bool
 - `id` (number)
 - `toCompleted` (boolean) - Note: camelCase in JS, snake_case in Rust
 
-**Returns**: Updated `Todo` object  
+**Returns**: Updated `Todo` object
 **Usage**:
 
 ```javascript
@@ -550,8 +661,8 @@ const toggled = await invoke("toggle_todo", {
 async fn delete_todo(pool: tauri::State<'_, PgPool>, id: i64) -> Result<u64, String>
 ```
 
-**Parameters**: `id` (number)  
-**Returns**: Number of rows deleted (1 on success, 0 if not found)  
+**Parameters**: `id` (number)
+**Returns**: Number of rows deleted (1 on success, 0 if not found)
 **Usage**:
 
 ```javascript
@@ -833,7 +944,7 @@ on Linux/WSL. Include development and production build commands.
 4. **Architecture**: Guided toward clean separation of concerns (models → repo → commands)
 5. **Documentation**: Assisted in writing comprehensive README and inline comments
 
-**Total AI Interactions**: ~15-20 prompts across 4 development phases  
+**Total AI Interactions**: ~15-20 prompts across 4 development phases
 **Time Saved**: Estimated 30-40 hours of documentation reading and trial-and-error
 
 ---
@@ -980,8 +1091,8 @@ THE SOFTWARE.
 ## 📞 Support & Contact
 
 **Project Author**: Ian Kabaka
-**Institution**: Moringa School AI Engineering Program  
-**Cohort**: September-October 2025  
+**Institution**: Moringa School AI Engineering Program
+**Cohort**: September-October 2025
 **Project Type**: Capstone (Individual)
 
 **Resources**:
@@ -1021,3 +1132,4 @@ THE SOFTWARE.
 **Built with 🦀 Rust | Powered by 🚀 Tauri | Stored in 🐘 PostgreSQL**
 
 _Last Updated: October 1, 2025_
+````
