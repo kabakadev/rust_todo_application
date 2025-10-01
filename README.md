@@ -9,24 +9,24 @@
 
 ## 📋 Table of Contents
 
-- [Overview](##overview)
-- [Features](##features)
-- [Technology Stack](##technology-stack)
-- [Prerequisites](##prerequisites)
-- [Installation Guide](##installation-guide)
-- [Usage](##usage)
-- [Project Structure](##project-structure)
-- [Database Architecture](##database-architecture)
-- [API Reference](##api-reference)
-- [Troubleshooting](##troubleshooting)
-- [AI Development Log](##ai-development-log)
-- [Building from Source](##building-from-source)
-- [Contributing](##contributing)
-- [License](##license)
+- [Overview](#overview)
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Prerequisites](#prerequisites)
+- [Installation Guide](#installation-guide)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Database Architecture](#database-architecture)
+- [API Reference](#api-reference)
+- [Troubleshooting](#troubleshooting)
+- [AI Development Log](#ai-development-log)
+- [Building from Source](#building-from-source)
+- [Contributing](#contributing)
+- [License](#license)
 
 ---
 
-## 🎯 Overview
+# overview
 
 This is a **production-ready desktop TODO application** that demonstrates modern Rust development practices, type-safe database operations, and cross-platform desktop app creation using Tauri v2. Built as a capstone project, it showcases AI-assisted development workflows and clean architecture patterns.
 
@@ -39,7 +39,7 @@ This is a **production-ready desktop TODO application** that demonstrates modern
 
 ---
 
-## ✨ Features
+# ✨ Features
 
 ### Core Functionality
 
