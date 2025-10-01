@@ -301,14 +301,14 @@ cargo tauri dev
 
 - **Authentication failed**
   Check `DATABASE_URL` credentials and that the role exists. In `psql`:
+  sudo -u postgres psql
 
   ```sql
   \du rust_todo
   -- or reset the password
   ALTER ROLE rust_todo WITH PASSWORD 'strongpass';
+  \q
   ```
-
-````
 
 - **Can’t connect to server**
   Ensure Postgres is running and listening on TCP. On Ubuntu:
@@ -319,11 +319,13 @@ cargo tauri dev
 
 - **Migrations can’t create tables**
   DB ownership matters. Recreate the DB owned by `rust_todo`:
+  sudo -u postgres psql
 
   ```sql
   -- in psql as postgres superuser:
   DROP DATABASE IF EXISTS rust_todo_db;
   CREATE DATABASE rust_todo_db OWNER rust_todo;
+  \q
   ```
 
 - **Windows/PowerShell note**
@@ -336,11 +338,7 @@ cargo tauri dev
 
 ---
 
-
-
 ### Step 4: Run Database Migrations
-
-
 
 **First Launch Notes:**
 
@@ -1123,4 +1121,7 @@ THE SOFTWARE.
 **Built with 🦀 Rust | Powered by 🚀 Tauri | Stored in 🐘 PostgreSQL**
 
 _Last Updated: October 1, 2025_
-````
+
+```
+
+```
