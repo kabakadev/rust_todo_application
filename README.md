@@ -10,12 +10,12 @@
 ## 📋 Table of Contents
 
 - [Overview](#overview)
-- [Features](#✨Features)
-- [Technology Stack](#🛠️Technology Stack)
-- [Prerequisites](#📦Prerequisites)
-- [Installation Guide](#🚀Installation Guide)
-- [Usage](#📖Usage)
-- [Project Structure](#📂Project Structure)
+- [Features](#Features)
+- [Technology Stack](#TechnologyStack)
+- [Prerequisites](#Prerequisites)
+- [Installation Guide](#InstallationGuide)
+- [Usage](#Usage)
+- [Project Structure](#ProjectStructure)
 - [Database Architecture](#database-architecture)
 - [API Reference](#api-reference)
 - [Troubleshooting](#troubleshooting)
@@ -39,7 +39,7 @@ This is a **production-ready desktop TODO application** that demonstrates modern
 
 ---
 
-# ✨ Features
+# Features
 
 ### Core Functionality
 
@@ -61,7 +61,7 @@ This is a **production-ready desktop TODO application** that demonstrates modern
 
 ---
 
-# 🛠️ Technology Stack
+# TechnologyStack
 
 | Layer                 | Technology          | Version | Purpose                                           |
 | --------------------- | ------------------- | ------- | ------------------------------------------------- |
@@ -75,7 +75,7 @@ This is a **production-ready desktop TODO application** that demonstrates modern
 
 ---
 
-# 📦 Prerequisites
+# Prerequisites
 
 ### System Requirements
 
@@ -156,7 +156,7 @@ cargo tauri --version
 
 ---
 
-# 🚀 Installation Guide
+# InstallationGuide
 
 ### Step 1: Clone the Repository
 
@@ -302,7 +302,7 @@ Live counters update automatically:
 
 ---
 
-# 📂 Project Structure
+# ProjectStructure
 
 ```
 rust-todo-app/
@@ -345,7 +345,7 @@ rust-todo-app/
 
 ---
 
-## 🗄️ Database Architecture
+# database-architecture
 
 ### Schema Overview
 
