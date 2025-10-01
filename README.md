@@ -10,12 +10,12 @@
 ## 📋 Table of Contents
 
 - [Overview](#overview)
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Prerequisites](#prerequisites)
-- [Installation Guide](#installation-guide)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
+- [Features](#✨ Features)
+- [Technology Stack](#🛠️ Technology Stack)
+- [Prerequisites](#📦 Prerequisites)
+- [Installation Guide](#🚀 Installation Guide)
+- [Usage](#📖 Usage)
+- [Project Structure](#📂 Project Structure)
 - [Database Architecture](#database-architecture)
 - [API Reference](#api-reference)
 - [Troubleshooting](#troubleshooting)
@@ -61,7 +61,7 @@ This is a **production-ready desktop TODO application** that demonstrates modern
 
 ---
 
-## 🛠️ Technology Stack
+# 🛠️ Technology Stack
 
 | Layer                 | Technology          | Version | Purpose                                           |
 | --------------------- | ------------------- | ------- | ------------------------------------------------- |
@@ -75,7 +75,7 @@ This is a **production-ready desktop TODO application** that demonstrates modern
 
 ---
 
-## 📦 Prerequisites
+# 📦 Prerequisites
 
 ### System Requirements
 
@@ -156,7 +156,7 @@ cargo tauri --version
 
 ---
 
-## 🚀 Installation Guide
+# 🚀 Installation Guide
 
 ### Step 1: Clone the Repository
 
@@ -249,7 +249,7 @@ cargo tauri dev
 
 ---
 
-## 📖 Usage
+# 📖 Usage
 
 ### Adding Your First Task
 
@@ -302,7 +302,7 @@ Live counters update automatically:
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
 
 ```
 rust-todo-app/
