@@ -413,7 +413,7 @@ CREATE TRIGGER set_completed_timestamp
 
 ---
 
-## 🔌 API Reference
+# api-reference
 
 ### Tauri Commands (Backend → Frontend Bridge)
 
@@ -563,7 +563,7 @@ if (rowsDeleted === 1) {
 
 ---
 
-## 🐛 Troubleshooting
+# troubleshooting
 
 ### Common Issues & Solutions
 
@@ -706,7 +706,7 @@ dotenvy::from_filename("/home/youruser/rust-todo-app/.env")
 
 ---
 
-## 🤖 AI Development Log
+# ai-development-log
 
 This project was built using AI-assisted development. Below is the complete chronicle of GenAI prompts used during development.
 
@@ -838,7 +838,7 @@ on Linux/WSL. Include development and production build commands.
 
 ---
 
-## 🔨 Building from Source
+# building-from-source
 
 ### Development Build
 
@@ -915,7 +915,7 @@ Topics covered:
 
 ---
 
-## 🤝 Contributing
+# contributing
 
 While this is a capstone project, contributions and feedback are welcome:
 
@@ -935,7 +935,7 @@ While this is a capstone project, contributions and feedback are welcome:
 
 ---
 
-## 📄 License
+# license
 
 This project is licensed under the **MIT License**.
 
