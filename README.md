@@ -10,12 +10,12 @@
 ## 📋 Table of Contents
 
 - [Overview](#overview)
-- [Features](#✨ Features)
-- [Technology Stack](#🛠️ Technology Stack)
-- [Prerequisites](#📦 Prerequisites)
-- [Installation Guide](#🚀 Installation Guide)
-- [Usage](#📖 Usage)
-- [Project Structure](#📂 Project Structure)
+- [Features](#✨Features)
+- [Technology Stack](#🛠️Technology Stack)
+- [Prerequisites](#📦Prerequisites)
+- [Installation Guide](#🚀Installation Guide)
+- [Usage](#📖Usage)
+- [Project Structure](#📂Project Structure)
 - [Database Architecture](#database-architecture)
 - [API Reference](#api-reference)
 - [Troubleshooting](#troubleshooting)
