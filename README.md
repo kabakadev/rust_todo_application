@@ -41,14 +41,15 @@ This is a **production-ready desktop TODO application** that demonstrates modern
 
 ---
 
-## 📹 Video Walkthrough and Pitch Deck
+## 📹 Video Walkthrough & Pitch Deck
 
 A complete video tutorial covering installation, usage, and development is available:
 
-**[📺 Watch on YouTube](https://www.youtube.com/watch?v=C7wSsC0dq5w)**
-**[Pitch deck](https://gamma.app/docs/Rust-TODO-Local-First-Desktop-Productivity-ezquliyogepn8ab)**
+|                                                                        |                                                                                                             |
+| ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| **[📺 Watch on YouTube](https://www.youtube.com/watch?v=C7wSsC0dq5w)** | **[📑 View Pitch Deck](https://gamma.app/docs/Rust-TODO-Local-First-Desktop-Productivity-ezquliyogepn8ab)** |
 
-Topics covered:
+**Topics covered**
 
 - Installing prerequisites on WSL Ubuntu
 - Database setup and migration
