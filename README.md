@@ -81,15 +81,38 @@ This is a **production-ready desktop TODO application** that demonstrates modern
 
 #### For Linux/WSL Users (Primary Target)
 
-**1. Rust Toolchain**
+###### For first time installation of a new wsl ditro like debian(preferred)
+
+ensure you update the terminal
 
 ```bash
-# Install Rust (includes cargo)
+#updates
+sudo apt update
+```
+
+then upgrade the terminal
+
+```bash
+#upgrade
+sudo apt upgrade
+```
+
+type Y to allow all
+
+**1. Rust Toolchain**
+install curl if not yet installed
+
+```bash
+sudo apt install curl
+```
+
+```bash
+# Install Rust (includes cargo) when prompted press enter for the default
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source $HOME/.cargo/env
 
 # Verify installation
-rustc --version  # Should show 1.70+
+rustc --version  # Should show 1.70+ or higher
 cargo --version
 ```
 
@@ -122,6 +145,11 @@ sudo apt install -y \
     librsvg2-dev
 
 # For Ubuntu 24.04 specifically
+#if apt is noisy about a package not starting from the delayed queue, confirm if it really installed by running
+```bash
+dpkg -l | grep libxvidcore4
+```
+
 # Note: Use libwebkit2gtk-4.1-dev, NOT 4.0-dev (deprecated)
 
 **5. Tauri CLI**
@@ -148,10 +176,16 @@ cargo tauri --version
 
 ### Step 1: Clone the Repository
 
+install git
+
+```bash
+sudo apt install git
+```
+
 ```bash
 # Clone from your GitHub repository
 git clone https://github.com/kabakadev/rust_todo_application.git
-cd rust-todo-app
+cd rust_todo_application
 ```
 
 ### Step 2: Database Setup
@@ -198,15 +232,20 @@ SQLx reads your connection string in two places:
 - `DATABASE_URL` — used at **runtime**.
 - `SQLX_DATABASE_URL` — used by **SQLx macros/CLI** at **compile time** (usually set to the same value).
 
-### `.env.example` → `.env`
-
-Copy the template and fill in values:
+**Recommended contents for `.env` (project root):**
+create the .env file
 
 ```bash
-cp .env.example .env
+touch .env
 ```
 
-**Recommended contents for `.env` (project root):**
+open the .env with the default nano
+
+```bash
+nano .env
+```
+
+then copy these values below and in nano, right click to paste
 
 ```dotenv
 # Postgres (use the TCP URL that works on your machine)
@@ -266,15 +305,16 @@ If `psql` can connect, your URL is correct.
 
 ## 4) Run Migrations (If Present)
 
-```bash
-# Navigate to Tauri directory
-cd src-tauri
+first install the sqlx-cli tool
 
-# Run migrations to create tables, enums, and triggers
+```bash
+cargo install sqlx-cli --no-default-features --features native-tls,postgres
+```
+
+```bash
+# Run migrations to create tables, enums, and triggers(migrations are at the root directory)
 cargo sqlx migrate run
 
-# Return to project root
-cd ..
 ```
 
 **Expected Output:**
