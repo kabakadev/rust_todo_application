@@ -41,11 +41,12 @@ This is a **production-ready desktop TODO application** that demonstrates modern
 
 ---
 
-## 📹 Video Walkthrough
+## 📹 Video Walkthrough and Pitch Deck
 
 A complete video tutorial covering installation, usage, and development is available:
 
 **[📺 Watch on YouTube](https://www.youtube.com/watch?v=C7wSsC0dq5w)**
+**[Pitch deck](https://gamma.app/docs/Rust-TODO-Local-First-Desktop-Productivity-ezquliyogepn8ab)**
 
 Topics covered:
 
