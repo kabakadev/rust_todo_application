@@ -39,6 +39,24 @@ This is a **production-ready desktop TODO application** that demonstrates modern
 
 ---
 
+---
+
+## 📹 Video Walkthrough
+
+A complete video tutorial covering installation, usage, and development is available:
+
+**[📺 Watch on YouTube](https://www.youtube.com/watch?v=C7wSsC0dq5w)**
+
+Topics covered:
+
+- Installing prerequisites on WSL Ubuntu
+- Database setup and migration
+- Running the application
+- Code walkthrough
+- Common troubleshooting steps
+
+---
+
 # Features
 
 ### Core Functionality
@@ -1036,24 +1054,6 @@ rustup target add x86_64-pc-windows-gnu
 # Build for Windows from Linux
 cargo tauri build --target x86_64-pc-windows-gnu
 ```
-
----
-
-## 📹 Video Walkthrough
-
-A complete video tutorial covering installation, usage, and development is available:
-
-**[📺 Watch on YouTube/Loom]** _(Link to be added after recording)_
-
-Topics covered:
-
-- Installing prerequisites on WSL Ubuntu
-- Database setup and migration
-- Running the application
-- Code walkthrough
-- Common troubleshooting steps
-
----
 
 # contributing
 
