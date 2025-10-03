@@ -409,7 +409,7 @@ cargo tauri dev
 
 ---
 
-# 📖 Usage
+# Usage
 
 ### Adding Your First Task
 
